@@ -1,0 +1,34 @@
+if:
+  influx:
+    cpuidle: host='localhost23'
+    memoryfree: host='localhost'
+then:
+  actions:
+    - name: stdout
+      args:
+        name: sriram
+    - name: stdout
+      args:
+        name: ramakrishnan
+        age: 10 
+    - name: terraform
+      args:
+        git:
+          url: github.com/sramakr/terraform.git
+          reload: True
+          repo: myapp
+        params:
+          user_name: sramak000
+          password: Comcast69
+          tenant_name: "Database Services"
+          image_id: 8ed15196-ab90-42cc-9aa3-fb7072130563
+          flavor_id: 101
+          key_pair: sramak000
+    - name: ansible
+      args:
+        git:
+          url: https://github.com/sramakr/ansible.git
+          reload: True
+          repo: myapp
+        params:
+          name: sriram 
