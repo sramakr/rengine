@@ -1,8 +1,27 @@
-import yaml,json,requests,logging,uuid,os,subprocess
+import yaml,json,requests,logging,uuid,os,subprocess,uuid
+from vault import Vault
 import git
 logging.basicConfig()
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
+
+def getSSHKey(config):
+	try:
+		vault=Vault(token=config.get('vault').get('token'),type=config.get('vault').get('type'),vault_url=config.get('vault').get('url'))
+		vault.auth()
+		out=vault.get(config.get('vault').get('keypath'))
+		pemfile='/tmp/'+str(uuid.uuid4())
+		print pemfile
+		fp=open(pemfile,'w')
+		for line in out.get('data').get('pem').split('\n'):
+			fp.write(line+'\n')
+		fp.close()
+		os.system('chmod 600 '+pemfile)
+		return pemfile
+	except Exception,e:
+		logger.info(e)
+	
+	
 
 def handle(config):
 	try:
@@ -25,5 +44,13 @@ def handle(config):
 			ipaddress=subprocess.check_output('./lib/terraform/terraform output ip',shell=True).strip('\n')
 		logger.debug(ipaddress)
 		logger.debug('printing ipaddress '+ repr(ipaddress))
+		hostsfile='/tmp/'+str(uuid.uuid4())
+		fp=open(hostsfile,'w')
+		fp.write(ipaddress)
+		fp.close()
+		logger.debug(hostsfile)
+		pemfile=getSSHKey(config)
+		logger.info(pemfile)
+		os.system('ansible-playbook -b --become-method=sudo -i '+hostsfile+' --private-key='+pemfile+' '+configpath+'/'+config.get('playbook'))
 	except Exception,e:
 		logger.error(e)

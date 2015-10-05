@@ -26,9 +26,15 @@ then:
           key_pair: sramak000
     - name: ansible
       args:
+        playbook: logstash.yml
         git:
           url: https://github.com/sramakr/ansible.git
           reload: True
           repo: myapp
+        vault:
+          keypath: /secret/mpm
+          type: github
+          token: ee1784952a9a6d8c21c89d28f74ab2b4c62c7907
+          url: http://127.0.0.1:8200/v1
         params:
           name: sriram 
