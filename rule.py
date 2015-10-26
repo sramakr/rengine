@@ -37,7 +37,7 @@ def input():
 	if actionflg:
 		action()
 
-#Initialize JVM if jmx metrics are being checked
+#Initialize JVM if jmx metrics integration is required
 if 'jmx' in config.get('if').keys():
 	JAVA()
 sched.start()
