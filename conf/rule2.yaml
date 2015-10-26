@@ -2,6 +2,11 @@ if:
   influx:
     cpuidle: host='localhost23'
     memoryfree: host='localhost'
+  jmx:
+    - object: kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec
+      attribute: OneMinuteRate
+      operator: ">"
+      threshold: 100
 then:
   actions:
     - name: stdout
@@ -34,7 +39,7 @@ then:
         vault:
           keypath: /secret/mpm
           type: github
-          token: ee1784952a9a6d8c21c89d28f74ab2b4c62c7907
+          token: d06fc901126bba25e00c0fb41867a372f269771a
           url: http://127.0.0.1:8200/v1
         params:
           name: sriram 

@@ -1,0 +1,7 @@
+gitpython
+hvac
+ansible
+apscheduler
+JPype1
+six
+dataset

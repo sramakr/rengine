@@ -1,4 +1,5 @@
 variable "user_name" {}
+variable "count" {default="1"}
 variable "server_name" {default="test_server2"}
 variable "region" { default = "ndc_ch2_e" }
 variable "password" {}

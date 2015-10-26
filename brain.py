@@ -18,6 +18,7 @@ class Brain(object):
 
         self.profile = profile
         self.modules = self.get_modules()
+	self.outflag=False
         self._logger = logging.getLogger(__name__)
 
     @classmethod
@@ -55,7 +56,7 @@ class Brain(object):
 			NoActionModule=False
 	    		self._logger.debug("Calling action for for module %s", module.__name__)
 			try:
-				module.handle(self.profile)
+				self.outflag=module.handle(self.profile)
 			except:
 				self._logger.error('Failed to execute module',
                                            exc_info=True)

@@ -8,8 +8,9 @@ resource "openstack_compute_instance_v2" "test_server2" {
 	}
   key_pair = "${var.key_pair}"
   security_groups = ["daas_ssh"]
+  count="${var.count}"
   }
 
 output "ip" {
-    value = "${openstack_compute_instance_v2.test_server2.access_ip_v4}"
+    value = "${join(",",openstack_compute_instance_v2.test_server2.*.access_ip_v4)}"
 }
