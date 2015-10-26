@@ -13,12 +13,14 @@ def getSSHKey(config):
 		pemfile='/tmp/'+str(uuid.uuid4())
 		print pemfile
 		fp=open(pemfile,'w')
-		for line in out.get('data').get('pem').split('\n'):
+		print out
+		for line in out.get('data').get('value').split('\n'):
 			fp.write(line+'\n')
 		fp.close()
 		os.system('chmod 600 '+pemfile)
 		return pemfile
 	except Exception,e:
+		print e.args
 		logger.info(e)
 	
 	

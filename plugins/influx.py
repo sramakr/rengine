@@ -15,5 +15,5 @@ def handle(config):
 				break
 		return flagcheck
 	except Exception,e:
-		logger.error("Error: exception "+e)
-		return flagcheck
+		logger.error(e)
+		return False
